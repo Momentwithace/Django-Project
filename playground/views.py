@@ -7,7 +7,9 @@ from store.models import Product
 # Create your views here.
 
 def say_hello(request):
-    queryset = Product.objects.filter(inventory=F('price'))
+    product = Product.objects.order_by('price')[0]
+    product = Product.objects.earliest()
+    product = Product.objects.latest()
     return render(request, 'index.html', {
-        'name': 'Ace', 'products': list(queryset)
+        'name': 'Ace', 'product': product
     })
