@@ -6,7 +6,7 @@ from store.models import Product
 # Create your views here.
 
 def say_hello(request):
-    queryset = Product.objects.filter(price__range=(20, 30))
+    queryset = Product.objects.filter(title__icontains='coffee')
 
     return render(request, 'index.html', {
         'name': 'Ace', 'products': list(queryset)
