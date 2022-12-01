@@ -6,10 +6,8 @@ from store.models import Product
 # Create your views here.
 
 def say_hello(request):
-    try:
-        product = Product.objects.get(pk=0)
-    except ObjectDoesNotExist:
+    queryset = Product.objects.filter(price__range=(20, 30))
 
-        return render(request, 'index.html', {
-            'name': 'Ace'
-        })
+    return render(request, 'index.html', {
+        'name': 'Ace', 'products': list(queryset)
+    })
