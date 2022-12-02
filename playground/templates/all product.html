@@ -13,9 +13,10 @@
 {% else %}
     <h1> Nothing to display</h1>
 {% endif %}
-
-{% for product in product %}
-<li>{{ result.title }}</li>
-{% endfor %}
+<ul>
+    {% for product in results %}
+        <li>{{ product.title }}</li>
+    {% endfor %}
+</ul>
 </body>
 </html>

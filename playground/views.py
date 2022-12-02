@@ -22,7 +22,7 @@ def hi(request):
 
 
 def productList(request):
-    products = Product.objects.order_by("price")
+    products = Product.objects.all()[:10]
     return render(request, 'all product.html', {
-        'name': 'all product', 'result': products
+        'name': 'all products', 'results': list(products)
     })
