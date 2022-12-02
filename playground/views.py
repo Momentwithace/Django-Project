@@ -26,3 +26,10 @@ def productList(request):
     return render(request, 'all product.html', {
         'name': 'all products', 'results': list(products)
     })
+
+
+def relatedField(request):
+    queryset = Product.objects.values('id', 'title', 'collection__title')
+    return render(request, 'querying related field.html', {
+        'name': "Querying Related Field", 'result': queryset
+    })
