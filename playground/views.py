@@ -19,3 +19,10 @@ def hi(request):
     return render(request, 'hi.html', {
         'name': 'Order_by', 'product': list(query_set)
     })
+
+
+def productList(request):
+    products = Product.objects.order_by("price")
+    return render(request, 'all product.html', {
+        'name': 'all product', 'result': products
+    })
