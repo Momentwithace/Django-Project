@@ -29,7 +29,14 @@ def productList(request):
 
 
 def relatedField(request):
-    queryset = Product.objects.values('id', 'title', 'collection__title')
+    queryset = Product.objects.values_list('id', 'title', 'collection__title')
     return render(request, 'querying related field.html', {
         'name': "Querying Related Field", 'result': queryset
+    })
+
+
+def orderItem(request):
+    queryset = OrderItem.objects.values('product_id')
+    return render(request, 'orderItem.html', {
+        'name': "Ordered Item", 'results': queryset
     })
