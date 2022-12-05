@@ -1,6 +1,8 @@
+from django.db.models.functions import Concat
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, F, Value
+
 from store.models import Product, OrderItem, Customer
 from django.db.models.aggregates import Avg, Sum, Count, Max, Min
 
@@ -68,6 +70,15 @@ def aggregate(request):
 
 def annotation(request):
     queryset = Customer.objects.annotate(is_new=Value(True))
+    return render(request, 'annotate.html', {
+        'name': 'Annotation', 'result': list(queryset)
+    })
+
+
+def func(request):
+    queryset = Customer.objects.annotate(
+        full_name=Concat('firstname', Value(''), 'lastname')
+    )
     return render(request, 'annotate.html', {
         'name': 'Annotation', 'result': list(queryset)
     })
