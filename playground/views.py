@@ -51,7 +51,7 @@ def fields(request):
 
 
 def productTable(request):
-    queryset = Product.objects.select_related('collection')
+    queryset = Product.objects.select_related('collection').all()
     return render(request, 'related table.html', {
         'name': 'Related Table', 'result': list(queryset)
     })
