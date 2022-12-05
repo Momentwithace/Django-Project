@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, F
 from store.models import Product, OrderItem
+from django.db.models.aggregates import Avg, Sum, Count, Max, Min
 
 
 # Create your views here.
@@ -54,4 +55,12 @@ def productTable(request):
     queryset = Product.objects.select_related('collection').all()
     return render(request, 'related table.html', {
         'name': 'Related Table', 'result': list(queryset)
+    })
+
+
+def aggregate(request):
+    queryset = Product.objects.aggregate(Count('id'))
+    return render(request, 'aggregate.html', {
+        'name': 'Aggregate for computing calculation',
+        'result': list(queryset)
     })
