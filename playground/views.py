@@ -79,6 +79,6 @@ def func(request):
     queryset = Customer.objects.annotate(
         full_name=Concat('firstname', Value(''), 'lastname')
     )
-    return render(request, 'annotate.html', {
-        'name': 'Annotation', 'result': list(queryset)
+    return render(request, 'func.html', {
+        'name': 'Func methods', 'result': list(queryset)
     })
