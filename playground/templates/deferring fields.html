@@ -8,13 +8,11 @@
     <title>Document</title>
 </head>
 <body>
-<h1>Result {{ name }}</h1>
-
+<h1> Page {{ name }}</h1>
 <ul>
-    {% for product in outcome %}
-       <li> {{ product.title }} </li>
+    {% for product in result %}
+          <li> {{ product.title }} $ {{ product.price }}</li>
     {% endfor %}
 </ul>
-
 </body>
 </html>

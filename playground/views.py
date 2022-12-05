@@ -36,7 +36,15 @@ def relatedField(request):
 
 
 def orderItem(request):
-    queryset = OrderItem.objects.values('product_id')
+    queryset = Product.objects.filter(
+        id__in=OrderItem.objects.values('product_id').distinct())
     return render(request, 'orderItem.html', {
-        'name': "Ordered Item", 'results': queryset
+        'name': "Ordered Item", 'outcome': list(queryset)
+    })
+
+
+def fields(request):
+    queryset = Product.objects.defer('description')
+    return render(request, 'deferring fields.html', {
+        'name': 'deferring fields', 'result': list(queryset)
     })
