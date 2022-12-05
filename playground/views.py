@@ -48,3 +48,10 @@ def fields(request):
     return render(request, 'deferring fields.html', {
         'name': 'deferring fields', 'result': list(queryset)
     })
+
+
+def productTable(request):
+    queryset = Product.objects.select_related('collection')
+    return render(request, 'related table.html', {
+        'name': 'Related Table', 'result': list(queryset)
+    })
