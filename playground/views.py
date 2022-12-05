@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q, F
-from store.models import Product, OrderItem
+from django.db.models import Q, F, Value
+from store.models import Product, OrderItem, Customer
 from django.db.models.aggregates import Avg, Sum, Count, Max, Min
 
 
@@ -59,8 +59,15 @@ def productTable(request):
 
 
 def aggregate(request):
-    queryset = Product.objects.aggregate(Count('id'))
+    result = Product.objects.aggregate(count=Count('id'), min_price=Min('price'))
     return render(request, 'aggregate.html', {
         'name': 'Aggregate for computing calculation',
-        'result': list(queryset)
+        'result': result
+    })
+
+
+def annotation(request):
+    queryset = Customer.objects.annotate(is_new=Value(True))
+    return render(request, 'annotate.html', {
+        'name': 'Annotation', 'result': list(queryset)
     })

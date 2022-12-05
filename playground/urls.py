@@ -9,5 +9,6 @@ urlpatterns = [
     path('fieldquerying/', views.relatedField),
     path('orderedItem/', views.orderItem),
     path('fields/', views.fields),
-    path('related/', views.relatedField)
+    path('related/', views.relatedField),
+    path('calculation/', views.aggregate)
 ]
