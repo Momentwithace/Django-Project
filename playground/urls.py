@@ -10,5 +10,6 @@ urlpatterns = [
     path('orderedItem/', views.orderItem),
     path('fields/', views.fields),
     path('related/', views.relatedField),
-    path('calculation/', views.aggregate)
+    path('calculation/', views.aggregate),
+    path('annotation/', views.annotation)
 ]
