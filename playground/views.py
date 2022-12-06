@@ -2,9 +2,11 @@ from django.db.models.functions import Concat
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, F, Value
+from django.db.models.aggregates import Avg, Sum, Count, Max, Min
+from django.contrib.contenttypes.models import ContentType
 
 from store.models import Product, OrderItem, Customer
-from django.db.models.aggregates import Avg, Sum, Count, Max, Min
+from tags.models import TaggedItem
 
 
 # Create your views here.
@@ -90,4 +92,10 @@ def grouping(request):
     )
     return render(request, 'grouping.html', {
         'name': 'Grouping methods', 'result': list(queryset)
+    })
+
+
+def contentType(request):
+    return render(request, 'content.html', {
+        'name': 'Content Types Usage',
     })

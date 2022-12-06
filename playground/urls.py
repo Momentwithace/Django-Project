@@ -12,5 +12,6 @@ urlpatterns = [
     path('related/', views.relatedField),
     path('calculation/', views.aggregate),
     path('annotation/', views.annotation),
-    path('func/', views.func)
+    path('func/', views.func),
+    path('group/', views.grouping)
 ]
