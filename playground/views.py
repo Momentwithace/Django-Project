@@ -96,6 +96,15 @@ def grouping(request):
 
 
 def contentType(request):
+    content_type = ContentType.objects.get_for_model(Product)
+
+    queryset = TaggedItem.objects\
+        .select_related('tag')\
+        .filter(
+            content_Type=content_type,
+            object_id=1
+    )
+
     return render(request, 'content.html', {
-        'name': 'Content Types Usage',
+        'name': 'Content Types Usage', 'tags': list(queryset)
     })
