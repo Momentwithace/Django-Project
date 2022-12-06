@@ -82,3 +82,12 @@ def func(request):
     return render(request, 'func.html', {
         'name': 'Func methods', 'result': list(queryset)
     })
+
+
+def grouping(request):
+    queryset = Customer.objects.annotate(
+        orders_count=Count('order')
+    )
+    return render(request, 'grouping.html', {
+        'name': 'Grouping methods', 'result': list(queryset)
+    })
