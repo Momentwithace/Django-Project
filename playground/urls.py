@@ -13,5 +13,6 @@ urlpatterns = [
     path('calculation/', views.aggregate),
     path('annotation/', views.annotation),
     path('func/', views.func),
-    path('group/', views.grouping)
+    path('group/', views.grouping),
+    path('tags/', views.contentType)
 ]
