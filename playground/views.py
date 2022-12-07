@@ -5,7 +5,7 @@ from django.db.models import Q, F, Value
 from django.db.models.aggregates import Avg, Sum, Count, Max, Min
 from django.contrib.contenttypes.models import ContentType
 
-from store.models import Product, OrderItem, Customer, Collection
+from store.models import Product, OrderItem, Customer, Collection, Order
 from tags.models import TaggedItem
 
 
@@ -137,3 +137,7 @@ def delete(request):
     collection.delete()
 
     Collection.objects.filter(id_gt=5).delete()
+
+
+def transaction(request):
+    order = Order()
