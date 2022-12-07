@@ -5,7 +5,7 @@ from django.db.models import Q, F, Value
 from django.db.models.aggregates import Avg, Sum, Count, Max, Min
 from django.contrib.contenttypes.models import ContentType
 
-from store.models import Product, OrderItem, Customer
+from store.models import Product, OrderItem, Customer, Collection
 from tags.models import TaggedItem
 
 
@@ -98,13 +98,23 @@ def grouping(request):
 def contentType(request):
     content_type = ContentType.objects.get_for_model(Product)
 
-    queryset = TaggedItem.objects\
-        .select_related('tag')\
+    queryset = TaggedItem.objects \
+        .select_related('tag') \
         .filter(
-            content_Type=content_type,
-            object_id=1
+        content_Type=content_type,
+        object_id=1
     )
 
     return render(request, 'content.html', {
         'name': 'Content Types Usage', 'tags': list(queryset)
+    })
+
+
+def record(request):
+    collection = Collection()
+    collection.title = 'Video Games'
+    collection.featured_product = Product(pk=1)
+
+    return render(request, 'content.html', {
+        'name': 'Content Types Usage'
     })
