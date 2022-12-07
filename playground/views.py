@@ -116,13 +116,24 @@ def record(request):
     collection.featured_product = Product(pk=1)
     collection.save()
 
-    return render(request, 'content.html', {
+    return render(request, 'record.html', {
         'name': 'Content Types Usage', 'new_record': collection
     })
 
 
 def update(request):
-    collection = Collection(pk=11)
+    collection = Collection.objects.get(pk=11)
     collection.title = 'Games'
     collection.featured_product = None
     collection.save()
+
+    # another way to update a record is
+
+    Collection.objects.filter(pk=11).update(featured_product=None)
+
+
+def delete(request):
+    collection = Collection.objects.get(pk=11)
+    collection.delete()
+
+    Collection.objects.filter(id_gt=5).delete()
