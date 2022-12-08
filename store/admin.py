@@ -36,6 +36,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['collection', 'last_update', InventoryFilter]
     list_per_page = 10
     list_select_related = ['collection']
+    search_fields = ['product']
 
     def collection_title(self, product):
         return product.collection.title
@@ -73,16 +74,22 @@ class CustomerAdmin(admin.ModelAdmin):
     #             'customer__id': str(customer.id)
     #         }))
     #     )
-    #     return format_html('<a href="{}">{}</a>', url, store.orders_count, )
+    #     return format_html('<a href="{}">{}</a>', u rl, store.orders_count, )
+
+
+class OrderItemInLine(admin.StackedInline):
+    model = models.OrderItem
+    autocomplete_fields = ['product']
+    extra = 0
 
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
+    inlines = [OrderItemInLine]
+    min_num =1
+    max_num = 10
     list_display = ['id', 'placed_at', 'customer']
     autocomplete_fields = ['customer']
-
-    list_per_page = 10
-    ordering = ['placed_at']
 
 
 @admin.register(models.Collection)
