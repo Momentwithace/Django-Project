@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import Count, QuerySet
 from django.utils.html import format_html, urlencode
 from django.urls import reverse
@@ -20,16 +20,16 @@ class InventoryFilter(admin.SimpleListFilter):
         if self.value() == '<10':
             return queryset.filter(inventory__lt=10)
 
-
     # Register your models here.
 
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
+    actions = ['clear_inventory']
     list_display = ['title', 'price', 'inventory_status',
                     'collection_title']
     list_editable = ['price']
-    list_filter = ['collection', 'last_update' ,InventoryFilter]
+    list_filter = ['collection', 'last_update', InventoryFilter]
     list_per_page = 10
     list_select_related = ['collection']
 
@@ -41,6 +41,15 @@ class ProductAdmin(admin.ModelAdmin):
         if product.inventory < 10:
             return "LOW"
         return "OK"
+
+    @admin.action(description='Clear inventory')
+    def clear_inventory(self, request, queryset):
+        updated_count = queryset.update(inventory=0)
+        self.message_user(
+            request,
+            f'{updated_count} products were successfully updated',
+            messages.ERROR
+        )
 
 
 @admin.register(models.Customer)
