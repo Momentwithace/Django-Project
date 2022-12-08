@@ -1,8 +1,10 @@
 from django.contrib import admin, messages
+from django.contrib.contenttypes.admin import GenericTabularInline
 from django.db.models import Count, QuerySet
 from django.utils.html import format_html, urlencode
 from django.urls import reverse
 
+from tags.models import TaggedItem
 from . import models
 
 
@@ -23,8 +25,14 @@ class InventoryFilter(admin.SimpleListFilter):
     # Register your models here.
 
 
+class TagInLine(GenericTabularInline):
+    autocomplete_fields = ['tag']
+    model = TaggedItem
+
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
+    inlines = [TagInLine]
     autocomplete_fields = ['collection']
     prepopulated_fields = {
         'slug': ['title']
@@ -86,7 +94,7 @@ class OrderItemInLine(admin.StackedInline):
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInLine]
-    min_num =1
+    min_num = 1
     max_num = 10
     list_display = ['id', 'placed_at', 'customer']
     autocomplete_fields = ['customer']
