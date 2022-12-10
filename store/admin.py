@@ -23,6 +23,7 @@ class InventoryFilter(admin.SimpleListFilter):
 
     # Register your models here.
 
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     autocomplete_fields = ['collection']
